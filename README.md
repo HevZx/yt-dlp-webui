@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center"><br><ins>Youtube downloader</ins><br>YouTube Video Downloader</h1> 
+  <h1 align="center"><br><ins>Youtube downloader</ins><br>YouTube wav Downloader</h1> 
 </p>
 
 ## Description
