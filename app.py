@@ -1,8 +1,6 @@
 import argparse
-import yaml
 import yt_dlp
 import gradio as gr
-import yaml
 import ffmpeg
 
 def load_config(file_path):
@@ -28,14 +26,12 @@ def download_video(url: str, save_path: str, proxy: str = "127.0.0.1:1080") -> s
     Args:
         url (str): The URL of the video.
         save_path (str): The path where the downloaded video will be saved.
-        proxy (str, optional): The proxy to be used for the download. Defaults to "127.0.0.1:1080".
-
+        
     Returns:
         str: A message indicating the success of the download.
     """
     # Set the options for the YouTube downloader
     ydl_opts = {
-    "proxy": proxy,
     "format": "bestaudio/best",  # Change this line for audio format
     "postprocessors": [{
         'key': 'FFmpegVideoConvertor',
@@ -74,8 +70,7 @@ def main(config: dict) -> None:
     output_path = gr.Textbox(
         label="Enter save path for video", placeholder=config["output_folder"]
     )
-    proxy = gr.Textbox(label="Enter Proxy", placeholder=config_proxy)
-
+    
     output_text = gr.Textbox(label="Download Status")
 
     demo = gr.Interface(
@@ -84,20 +79,7 @@ def main(config: dict) -> None:
         outputs=output_text,
         title="YouTube Video Downloader",
         description="Download YouTube videos using yt_dlp",
-        theme="compact",
+        theme="base",
     )
 
-    demo.launch(share=False)
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--config_path",
-        type=str,
-        default="config.yaml",
-        help="configuration file path",
-    )
-    args = parser.parse_args()
-    config = load_config(args.config_path)
-    main(config)
+    demo.launch(share=True)
