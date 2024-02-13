@@ -3,7 +3,7 @@ import yaml
 import yt_dlp
 import gradio as gr
 import yaml
-
+import ffmpeg
 
 def load_config(file_path):
     """
@@ -35,10 +35,14 @@ def download_video(url: str, save_path: str, proxy: str = "127.0.0.1:1080") -> s
     """
     # Set the options for the YouTube downloader
     ydl_opts = {
-        "proxy": proxy,
-        "format": "best",
-        "restrict-filenames": True,
-        "outtmpl": f"{save_path}/%(title)s.%(ext)s",
+    "proxy": proxy,
+    "format": "bestaudio/best",  # Change this line for audio format
+    "postprocessors": [{
+        'key': 'FFmpegVideoConvertor',
+        'preferedformat': 'wav',
+    }],
+    "restrict-filenames": True,
+    "outtmpl": f"{save_path}/%(title)s.%(ext)s",
     }
     
     # Create a context manager for the YouTube downloader and download the video
